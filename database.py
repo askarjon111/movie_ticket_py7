@@ -19,8 +19,5 @@ def get_db():
     try:
         db_session = Session()
         yield db_session
-    except Exception as e:
-        db_session.rollback()
-        raise e
     finally:
         db_session.close()

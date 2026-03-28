@@ -1,8 +1,11 @@
+from typing import List
+
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy import select
 from schemas import TicketCreate, TicketOut
 from database import Base, get_db, engine
 from models import Ticket
+
 
 
 Base.metadata.create_all(bind=engine)
@@ -29,3 +32,11 @@ def create_ticket(ticket_in: TicketCreate, db = Depends(get_db)):
     db.refresh(ticket)
 
     return ticket
+
+
+@api_router.get('/', response_model=List[TicketOut])
+def get_tickets(db = Depends(get_db)):
+    stmt = select(Ticket)
+    tickets = db.scalars(stmt).all()
+
+    return tickets
