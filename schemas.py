@@ -9,7 +9,7 @@ class TicketCreate(BaseModel):
 
 
 class TicketOut(BaseModel):
-    ticket_id: int = Field(ge=1)
+    id: int = Field(ge=1)
     movie_name: str = Field(max_length=200)
     seat_number: int = Field(ge=1, le=50)
     customer_name: str = Field(max_length=100)
